@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1> Webhook</h1>
+<h1> Webhook Page</h1>
  
 <?php
 ini_set('display_errors',0);
