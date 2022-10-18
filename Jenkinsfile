@@ -4,8 +4,8 @@ pipeline {
     
     environment {
         imageName = "app"
-        registryCredentials = "newnexus"
-        registry = "3.101.66.199:8082"
+        registryCredentials = "newnexus"  
+        registry = "52.53.250.93:8082"
         dockerImage = ''
     }
     
@@ -23,13 +23,17 @@ pipeline {
              withSonarQubeEnv(installationName: 'Sonar', credentialsId: 'sonarqube') {
                  sh "/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar-scanner/bin/sonar-scanner"
                 
-                
-                
-        
             }
                 
         }
     }
+    stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
        
         
     
@@ -45,27 +49,27 @@ pipeline {
       }
     }
       // Uploading Docker images into Nexus Registry
-    stage('Uploading to Nexus') {
+    stage('Image upload to Nexus') {
      steps{  
          script {
              docker.withRegistry( 'http://'+registry, registryCredentials ) {
-             dockerImage.push('latest')
-          }
+              version = VersionNumber(versionNumberString: '1.${BUILDS_ALL_TIME}')
+             dockerImage.push(version)
+           }
         }
       }
-      
     }
-    stage('stop previous containers') {
+    stage('Delete previous containers') {
          steps {
-            sh 'docker ps -f name=myphpcontainer -q | xargs --no-run-if-empty docker container stop'
-            sh 'docker container ls -a -fname=myphpcontainer -q | xargs -r docker container rm'
+            sh 'docker ps -f name=app -q | xargs --no-run-if-empty docker container stop'
+            sh 'docker container ls -a -fname=app -q | xargs -r docker container rm'
          }
        }
     
         stage('Docker Run') {
        steps{
          script {
-            dockerImage.run("-p 83:80 --rm ")
+            dockerImage.run("-p 80:80 --rm --name app")
                
             }
          }
