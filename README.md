@@ -1,3 +1,2 @@
-<<<<<<< Updated upstream
 # php-project
 
