@@ -5,7 +5,7 @@ pipeline {
     environment {
         imageName = "app"
         registryCredentials = "newnexus"  
-        registry = "52.53.250.93:8082"
+        registry = "13.57.59.145:8082"
         dockerImage = ''
     }
     
@@ -14,7 +14,7 @@ pipeline {
         stage('Code checkout') 
         {
             steps {
-                 git branch: 'main', url: 'https://github.com/mfarhansayed/php-project.git'
+                 git branch: '', url: 'https://github.com/mfarhansayed/php-project.git'
                 }
         }
            stage('SonarQube Analysis') {
@@ -23,11 +23,14 @@ pipeline {
              withSonarQubeEnv(installationName: 'Sonar', credentialsId: 'sonarqube') {
                  sh "/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar-scanner/bin/sonar-scanner"
                 
+                
+                
+        
             }
                 
         }
     }
-    stage("Quality Gate") {
+     stage("Quality Gate") {
             steps {
               timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
