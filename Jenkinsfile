@@ -4,8 +4,8 @@ pipeline {
     
     environment {
         imageName = "app"
-        registryCredentials = "newnexus"
-        registry = "3.101.66.199:8082"
+        registryCredentials = "newnexus"  
+        registry = "13.57.59.145:8082"
         dockerImage = ''
     }
     
@@ -30,6 +30,13 @@ pipeline {
                 
         }
     }
+     stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
        
         
     
@@ -45,27 +52,27 @@ pipeline {
       }
     }
       // Uploading Docker images into Nexus Registry
-    stage('Uploading to Nexus') {
+    stage('Image upload to Nexus') {
      steps{  
          script {
              docker.withRegistry( 'http://'+registry, registryCredentials ) {
-             dockerImage.push('latest')
-          }
+              version = VersionNumber(versionNumberString: '1.${BUILDS_ALL_TIME}')
+             dockerImage.push(version)
+           }
         }
       }
-      
     }
-    stage('stop previous containers') {
+    stage('Delete previous containers') {
          steps {
-            sh 'docker ps -f name=myphpcontainer -q | xargs --no-run-if-empty docker container stop'
-            sh 'docker container ls -a -fname=myphpcontainer -q | xargs -r docker container rm'
+            sh 'docker ps -f name=app -q | xargs --no-run-if-empty docker container stop'
+            sh 'docker container ls -a -fname=app -q | xargs -r docker container rm'
          }
        }
     
         stage('Docker Run') {
        steps{
          script {
-            dockerImage.run("-p 83:80 --rm ")
+            dockerImage.run("-p 80:80 --rm --name app")
                
             }
          }
