@@ -80,7 +80,7 @@ pipeline {
         steps{   
             script{
                 
-                sh ('kubectl apply -f  K8.yml')
+                sh ('kubectl apply -f  k8.yml')
                 
             }
         }
