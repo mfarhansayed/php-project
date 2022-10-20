@@ -14,7 +14,7 @@ pipeline {
         stage('Code checkout') 
         {
             steps {
-                 git branch: 'main', url: 'https://github.com/mfarhansayed/php-project.git'
+                 git branch: '*/*', url: 'https://github.com/mfarhansayed/php-project.git'
                 }
         }
            stage('SonarQube Analysis') {
