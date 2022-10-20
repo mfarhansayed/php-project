@@ -5,7 +5,7 @@ pipeline {
     environment {
         imageName = "app"
         registryCredentials = "newnexus"  
-        registry = "13.57.59.145:8082"
+        registry = "54.176.28.219:8082"
         dockerImage = ''
     }
     
@@ -14,7 +14,7 @@ pipeline {
         stage('Code Checkout') 
         {
             steps {
-                 git branch: '*/*', url: 'https://github.com/mfarhansayed/php-project.git'
+                 git branch: 'main', url: 'https://github.com/mfarhansayed/php-project.git'
                 }
         }
            stage('SonarQube Analysis') {
@@ -76,7 +76,20 @@ pipeline {
                
             }
          }
-      }  
+      }
     }
+
+       post {
+        failure {
+             emailext body: '''
+    Please Check the Code!! THE BUILD HAS FAILED''',   
+    mimeType: 'text/html',
+    subject: "failed",
+    from: "farhansayed@zohomail.in",
+    to: "farhansayed1116@gmail.com",
+    recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+         }
+    }  
+    
 }
 
