@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1> Main</h1>
+<h1> Main Branch</h1>
  
 <?php
 ini_set('display_errors',0);
