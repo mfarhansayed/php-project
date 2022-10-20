@@ -88,6 +88,7 @@ pipeline {
     recipientProviders: [[$class: 'CulpritsRecipientProvider']]
          }
     }  
+}
     
 
 
