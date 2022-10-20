@@ -11,7 +11,7 @@ pipeline {
     
     stages 
     {
-        stage('CODE Checkout') 
+        stage(' Checkout') 
         {
             steps {
                  git branch: '*/*', url: 'https://github.com/mfarhansayed/php-project.git'
