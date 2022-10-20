@@ -11,11 +11,14 @@ pipeline {
     
     stages 
     {
-        stage('Code checkout') 
-        {
+      stage('Git Code') {
+
             steps {
-                 git branch: '*/*', url: 'https://github.com/mfarhansayed/php-project.git'
-                }
+
+                checkout([$class: 'GitSCM', branches: [[name: '*/*']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/mfarhansayed/php-project.git']]])                   }
+
+        }
+        
         }
            stage('SonarQube Analysis') {
                
