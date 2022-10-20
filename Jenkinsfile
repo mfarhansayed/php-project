@@ -11,7 +11,7 @@ pipeline {
     
     stages 
     {
-      stage('Git Code') {
+      stage('Git') {
 
             steps {
 
