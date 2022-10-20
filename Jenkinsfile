@@ -77,6 +77,8 @@ pipeline {
             }
          }
       }
+    }
+
        post {
         failure {
              emailext body: '''
@@ -88,6 +90,6 @@ pipeline {
     recipientProviders: [[$class: 'CulpritsRecipientProvider']]
          }
     }  
-    }
+    
 }
 
