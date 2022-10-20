@@ -11,10 +11,10 @@ pipeline {
     
     stages 
     {
-        stage('Checkout code') 
+        stage('Code checkout') 
         {
             steps {
-                 git branch: '*/main', url: 'https://github.com/mfarhansayed/php-project.git'
+                 git branch: 'main', url: 'https://github.com/mfarhansayed/php-project.git'
                 }
         }
            stage('SonarQube Analysis') {
@@ -23,14 +23,11 @@ pipeline {
              withSonarQubeEnv(installationName: 'Sonar', credentialsId: 'sonarqube') {
                  sh "/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar-scanner/bin/sonar-scanner"
                 
-                
-                
-        
             }
                 
         }
     }
-     stage("Quality Gate") {
+    stage("Quality Gate") {
             steps {
               timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
@@ -76,10 +73,9 @@ pipeline {
                
             }
          }
-      }
+      }  
     }
-
-       post {
+    post {
         failure {
              emailext body: '''
     Please Check the Code!! THE BUILD HAS FAILED''',   
@@ -92,4 +88,6 @@ pipeline {
     }  
     
 }
+
+
 
