@@ -11,10 +11,10 @@ pipeline {
     
     stages 
     {
-        stage('Code Checkout') 
+        stage('Checkout') 
         {
             steps {
-                 git branch: '*/*', url: 'https://github.com/mfarhansayed/php-project.git'
+                 git branch: '*/main', url: 'https://github.com/mfarhansayed/php-project.git'
                 }
         }
            stage('SonarQube Analysis') {
