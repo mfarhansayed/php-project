@@ -76,7 +76,18 @@ pipeline {
                
             }
          }
-      }  
+      }
+       post {
+        failure {
+             emailext body: '''
+    Please Check the Code!! THE BUILD HAS FAILED''',   
+    mimeType: 'text/html',
+    subject: "failed",
+    from: "farhansayed@zohomail.in",
+    to: "farhansayed1116@gmail.com",
+    recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+         }
+    }  
     }
 }
 
