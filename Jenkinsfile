@@ -5,7 +5,7 @@ pipeline {
     environment {
         imageName = "app"
         registryCredentials = "newnexus"  
-        registry = "18.144.19.120:8082"
+        registry = "13.57.192.114:8082"
         dockerImage = ''
     }
     
@@ -79,8 +79,7 @@ pipeline {
       stage('K8S Deploy') {
         steps{   
             script{
-                
-                
+
                 sh ('kubectl apply -f  k8.yml')
                 
             }
