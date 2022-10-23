@@ -12,7 +12,7 @@ spec:
         name: app
     spec:
       containers:
-      - image: http://54.176.28.219:8082/app:1.20
+      - image: http://13.57.192.114:8082/app:1.20
         name: app
         ports: 
         - name: app
