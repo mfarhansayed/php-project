@@ -82,6 +82,7 @@ pipeline {
        }  
 
     }
+    }
     post {
         failure {
              emailext attachLog: true,
