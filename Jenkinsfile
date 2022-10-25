@@ -58,6 +58,20 @@ pipeline {
          }
         }
       }
+       // Stopping Docker containers for cleaner Docker run
+         stage('stop previous containers') {
+         steps {
+            sh 'docker ps -f name=myphpContainer -q | xargs --no-run-if-empty docker container stop'
+            sh 'docker container ls -a -fname=myphpContainer -q | xargs -r docker container rm'
+         }
+       }
+        stage('Docker Run') {
+        steps{
+         script {
+                sh 'docker run -d -p 8096:80 --rm --name myphpContainer 414026235762.dkr.ecr.us-west-1.amazonaws.com/php-app:latest'
+            }
+      }
+    }
 
     }
     post {
