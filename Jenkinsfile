@@ -8,7 +8,7 @@ pipeline {
     
     stages 
     {
-      stage('Git') {
+      stage('Git chceckout') {
 
             steps {
 
