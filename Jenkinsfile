@@ -74,10 +74,9 @@ pipeline {
     }
     stage('K8S Deploy') {
         steps{   
+          sshagent(['k8']) {
             script{
-
                 sh ('kubectl apply -f  k8.yaml')
-                
             }
         }
        }  
