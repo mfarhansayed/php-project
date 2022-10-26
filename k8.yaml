@@ -7,11 +7,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      bb: web
+      k8: web
   template:
     metadata:
       labels:
-        bb: web
+        k8: web
     spec:
       containers:
       - name: php
@@ -26,7 +26,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    bb: web
+    k8: web
   ports:
   - port: 3000
     targetPort: 3000
