@@ -1,33 +1,35 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: ReplicationController
 metadata:
-  name: php
-  namespace: default
+  labels:
+    name: phpapp
+  name: php-controller
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      k8: web
   template:
     metadata:
       labels:
-        k8: web
+        name: phpapp
     spec:
       containers:
-      - name: php
-        image: 414026235762.dkr.ecr.us-west-1.amazonaws.com/php-app:latest
-        imagePullPolicy: Never
+      - image: 414026235762.dkr.ecr.us-west-1.amazonaws.com/php-app:latest
+        name: phpapp
+        ports: 
+        - name: phpapp
+          containerPort: 8085
 ---
+# Node Port Service
 apiVersion: v1
 kind: Service
 metadata:
-  name: php
-  namespace: default
+  labels:
+    name: phpapp
+  name: phpapp
 spec:
   type: NodePort
-  selector:
-    k8: web
   ports:
-  - port: 3000
-    targetPort: 3000
-    nodePort: 30001
+    - port: 8086
+      targetPort: 8086
+  selector:
+    name: phpapp
+---
