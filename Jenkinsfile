@@ -11,10 +11,16 @@ pipeline {
     
     stages 
     {
-      stage('Git') {
+      stage('Git') 
+      {
 
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/*']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/mfarhansayed/php-project.git']]])             
+                checkout([$class: 'GitSCM',
+                branches: [[name: '*/*']],
+                doGenerateSubmoduleConfigurations: false,
+                extensions: [],
+                submoduleCfg: [],
+                userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/mfarhansayed/php-project.git']]])             
                       }
 
         }  
@@ -43,7 +49,7 @@ pipeline {
         }
       }
     }
-    
+
     stage('Delete previous containers') {
          steps {
             sh 'docker ps -f name=app -q | xargs --no-run-if-empty docker container stop'
