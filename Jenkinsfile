@@ -24,6 +24,23 @@ pipeline {
                       }
 
         }  
+        stage('SonarQube Analysis') {
+               
+             steps{
+             withSonarQubeEnv(installationName: 'sonarqube', credentialsId: 'SonarQube') {
+                 sh "/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar-scanner/bin/sonar-scanner"
+                
+            }
+                
+        }
+    }
+    stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
 
     // Building Docker images
     stage('Building image') 
