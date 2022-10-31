@@ -27,7 +27,7 @@ pipeline {
         stage('SonarQube Analysis') {
                
              steps{
-             withSonarQubeEnv(installationName: 'sonar-scanner', credentialsId: 'Sonar') {
+             withSonarQubeEnv(installationName: 'Sonar', credentialsId: 'Sonar') {
                  sh "/var/jenkins_home/tools/sonar-scanner/bin/sonar-scanner"
                 
             }
