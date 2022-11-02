@@ -1,9 +1,9 @@
 apiVersion: v1
-kind: ReplicationController
+kind: Deployment
 metadata:
   labels:
     name: phpapp
-  name: php-controller
+  name: php-dep
 spec:
   replicas: 1
   template:
