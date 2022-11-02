@@ -32,7 +32,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 8086
+    - port: 80
       targetPort: 8086
   selector:
     name: phpapp
