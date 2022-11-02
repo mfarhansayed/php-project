@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: phpapp
+  name: php
   labels:
-    app: phpapp
+    app: php
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: phpapp
+      app: php
   template:
     metadata:
       labels:
-        app: phpapp
+        app: php
     spec:
       containers:
-      - name: phpapp
+      - name: php
         image: 414026235762.dkr.ecr.us-west-1.amazonaws.com/php-app
         ports:
         - containerPort: 80
@@ -26,14 +26,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    name: phpapp
-  name: phpapp
+  name: php
 spec:
-  type: NodePort
-  ports:
-    - port: 80
-      targetPort: 80
   selector:
-    name: phpapp
----
+    app: php
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 80
+    nodePort: 31110
