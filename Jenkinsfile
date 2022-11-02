@@ -18,7 +18,7 @@ pipeline {
 
         }
         
-           stage('SonarQube Analysis') {
+           stage('SonarQube analysis') {
                
              steps{
              withSonarQubeEnv(installationName: 'Sonar', credentialsId: 'sonarqube') {
